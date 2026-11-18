@@ -72,7 +72,7 @@ with chart1:
     st.subheader('Top 10 category by revenue')
     fig = px.bar(category_df, x= 'revenue', y='category' , text=['R${:,.0f}'.format(x) for x in category_df['revenue']],
                  template = 'seaborn')
-    st.plotly_chart(fig, use_container_width=True, height= 400)
+    st.plotly_chart(fig, width='stretch', height= 400)
 
 state_df = filtered_df[delivered].groupby(by= ['customer_state'], as_index = False)['revenue'].sum().sort_values(by='revenue', ascending=False)
 top_5_state = state_df.head(5)
@@ -83,7 +83,8 @@ with chart2:
     st.subheader('Top 5 States by Revenue')
     fig= px.pie(pie_df,values= 'revenue', names= 'customer_state', hole = 0.5)
     fig.update_traces(textinfo='percent+label', textposition= 'outside')
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
+
 
 cl1, cl2 = st.columns(2)
 with cl1:
@@ -99,3 +100,43 @@ with cl2:
         csv = pie_df.to_csv(index= False).encode('utf-8')
         st.download_button('Download Data', data= csv, file_name='State.csv', mime='text/csv',
                            help = 'Click here to download the data as a CSV file')
+
+
+st.subheader('Monthly revenue trend')
+
+linechart = pd.DataFrame(filtered_df[delivered].groupby('order_month', as_index=False)['revenue'].sum())
+linechart = linechart[linechart['order_month'] >= '2017-01']
+linechart = linechart.sort_values('order_month')
+fig2 = px.line(linechart, x= 'order_month', y= 'revenue', labels = {'order_month': 'Month', 'revenue': 'Revenue (R$)'},markers='stretch' ,height= 500, template='gridon')
+st.plotly_chart(fig2, width= 'stretch')
+fig2.update_xaxes(dtick='M1', tickformat='%b %Y')
+
+with st.expander('View Data of TimeSeris'):
+    st.write(linechart.T.style.background_gradient(cmap='Blues'))
+    csv= linechart.to_csv(index=False).encode('utf-8')
+    st.download_button('Download Data', data= csv, file_name='TimSeries.csv', mime='text/csv',
+                           help = 'Click here to download the data as a CSV file')
+
+
+import plotly.figure_factory as ff
+st.subheader(':point_right: Month wise Sub-Category Sales Summary')
+with st.expander('Summary_Table'):
+    df_sample = df[0:5][['customer_state', 'customer_city', 'category', 'revenue']]
+    fig = ff.create_table(df_sample, colorscale='Cividis')
+    st.plotly_chart(fig, width='stretch')
+
+
+orders_by_state = filtered_df[delivered].groupby('customer_state', as_index=False).agg(
+    median_days=('delivery_days', 'median'),
+    late_rate = ('is_late', 'mean'),
+    orders=('order_id', 'nunique')
+).sort_values(by= "median_days", ascending=False)
+orders_by_state['late_rate'] = orders_by_state['late_rate'] * 100
+avg_late = filtered_df[delivered]["is_late"].mean() * 100
+
+fig3 = px.scatter(orders_by_state, x= 'median_days', y='late_rate', size= 'orders', title= "Delivery: slow isn't the same as late",
+                  labels={'median_days': 'Median delivery time (days)', 'late_rate': 'Late deliveries (%of orders)', 'orders': 'Orders'}, 
+                    text= 'customer_state', size_max=50)
+fig3.add_hline(y=avg_late, line_dash= 'dash', annotation_text='Average')
+fig3.update_traces(textposition="top center")
+st.plotly_chart(fig3, width='stretch')
