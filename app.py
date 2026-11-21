@@ -140,3 +140,32 @@ fig3 = px.scatter(orders_by_state, x= 'median_days', y='late_rate', size= 'order
 fig3.add_hline(y=avg_late, line_dash= 'dash', annotation_text='Average')
 fig3.update_traces(textposition="top center")
 st.plotly_chart(fig3, width='stretch')
+
+st.divider()
+st.header("Key insights & recommendations")
+st.caption("Based on all delivered orders, Jan 2017 – Aug 2018 (not affected by filters)")
+
+st.markdown("""
+#### 1. The catalogue is diversified, but the geography isn't
+- The top 3 states (São Paulo, Rio de Janeiro, Minas Gerais) bring **63% of revenue**; São Paulo alone brings **38%**.
+- By contrast, the #1 category (health & beauty) is only **~9% of revenue**.
+
+**Recommendation:** growth depends on a few regions. Protect the South-East, and check whether delivery problems are holding other regions back.
+""")
+
+st.markdown("""
+#### 2. Slow is not the same as late
+- The far North (AM, AP, RR) waits **24–26 days** for a delivery, but orders rarely arrive late: customers are told upfront.
+- The North-East (AL, MA) breaks its delivery promise on **20–24% of orders**, almost 3× the national average (7.9%).
+
+**Recommendation:** before investing in growth in the North-East, fix the delivery estimates and logistics there.
+""")
+
+st.markdown("""
+#### 3. Rio de Janeiro is the quick win
+- Rio is the **#2 market** (13% of revenue, 12,000+ orders)...
+- ...but **13% of its orders arrive late**, more than twice São Paulo's rate (5.8%), despite a similar delivery time.
+
+**Recommendation:** improving Rio's delivery reliability is the fastest way to protect revenue in a market that already exists.
+""")
+
