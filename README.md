@@ -1,6 +1,6 @@
 # E-commerce Sales & Operations Dashboard
 
-> 🚧 **In progress.** Data cleaning is done; the interactive dashboard ships this week.
+> **Live.** [Data cleaning is done; the interactive dashboard ships this week.](https://olist-e-commerce-sales-dashboard.streamlit.app/)
 
 An interactive dashboard built on **99,000+ real orders** from Olist, a Brazilian e-commerce marketplace. It's built for a **head of sales** who needs to decide where to invest next quarter, and who also needs to know whether operations (delivery, cancellations) are holding the business back.
 
