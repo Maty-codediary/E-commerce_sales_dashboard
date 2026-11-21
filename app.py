@@ -155,7 +155,7 @@ st.markdown("""
 
 st.markdown("""
 #### 2. Slow is not the same as late
-- The far North (AM, AP, RR) waits **24–26 days** for a delivery, but orders rarely arrive late: customers are told upfront.
+- The far North (Amazonas, Amapá) waits 24–26 days for a delivery, yet only ~5% of orders arrive late: customers are told upfront.
 - The North-East (AL, MA) breaks its delivery promise on **20–24% of orders**, almost 3× the national average (7.9%).
 
 **Recommendation:** before investing in growth in the North-East, fix the delivery estimates and logistics there.
@@ -164,7 +164,7 @@ st.markdown("""
 st.markdown("""
 #### 3. Rio de Janeiro is the quick win
 - Rio is the **#2 market** (13% of revenue, 12,000+ orders)...
-- ...but **13% of its orders arrive late**, more than twice São Paulo's rate (5.8%), despite a similar delivery time.
+- ...but **13% of its orders arrive late**, more than twice São Paulo's rate (5.8%).
 
 **Recommendation:** improving Rio's delivery reliability is the fastest way to protect revenue in a market that already exists.
 """)
