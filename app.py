@@ -29,7 +29,7 @@ with col2:
     date2 = pd.to_datetime(st.date_input('End Date', endDate))
 
 df = sales[(sales['purchase_at'] >=date1) & (sales['purchase_at'] <= date2)].copy()
-st.sidebar.header('Choose you filter: ')
+st.sidebar.header('Choose your filter: ')
 state = st.sidebar.multiselect('Pick your State', df['customer_state'].unique())
 if not state:
     df2 = df.copy()
@@ -69,7 +69,7 @@ chart1, chart2 = st.columns(2)
 category_df = filtered_df[delivered].groupby(by= ['category'], as_index = False)['revenue'].sum().sort_values(by='revenue', ascending=False).head(10)
 
 with chart1:
-    st.subheader('Top 10 category by revenue')
+    st.subheader('Top 10 categories by revenue')
     fig = px.bar(category_df, x= 'revenue', y='category' , text=['R${:,.0f}'.format(x) for x in category_df['revenue']],
                  template = 'seaborn')
     st.plotly_chart(fig, width='stretch', height= 400)
@@ -111,7 +111,7 @@ fig2 = px.line(linechart, x= 'order_month', y= 'revenue', labels = {'order_month
 st.plotly_chart(fig2, width= 'stretch')
 fig2.update_xaxes(dtick='M1', tickformat='%b %Y')
 
-with st.expander('View Data of TimeSeris'):
+with st.expander('View Data of TimeSeries'):
     st.write(linechart.T.style.background_gradient(cmap='Blues'))
     csv= linechart.to_csv(index=False).encode('utf-8')
     st.download_button('Download Data', data= csv, file_name='TimSeries.csv', mime='text/csv',
